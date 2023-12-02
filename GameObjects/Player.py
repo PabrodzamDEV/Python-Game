@@ -3,6 +3,18 @@ import os
 
 from pyglet.window import key
 
+current_directory = os.path.dirname(os.path.abspath(__file__))
+# Define the relative path to the sprite sheets
+run_spritesheet_path = os.path.join(current_directory, "Assets", "assassin_run_right.png")
+run_left_spritesheet_path = os.path.join(current_directory, "Assets", "assassin_run_left.png")
+idle_spritesheet_path = os.path.join(current_directory, "Assets", "assassin_idle.png")
+junp_spritesheet_path = os.path.join(current_directory, "Assets", "assassin_jump.png")
+
+run_right_spritesheet = pyglet.image.load(run_spritesheet_path)
+run_left_spritesheet = pyglet.image.load(run_left_spritesheet_path)
+idle_spritesheet = pyglet.image.load(idle_spritesheet_path)
+jump_spritesheet = pyglet.image.load(junp_spritesheet_path)
+
 
 class Player:
     def __init__(self, x, y, speed=200):
@@ -10,7 +22,7 @@ class Player:
         # Get the current script's directory
         # Set the knight's speed
         self.speed = speed
-        self.jump_speed = 300
+        self.jump_speed = 500
         self.is_jumping = False
         self.gravity = 1000
         self.initial_y = y
@@ -20,18 +32,6 @@ class Player:
         # Initialize velocity
         self.velocity_x = 0
         self.velocity_y = 0
-        current_directory = os.path.dirname(os.path.abspath(__file__))
-        # Define the relative path to the sprite sheets
-        run_spritesheet_path = os.path.join(current_directory, "Assets", "assassin_run_right.png")
-        run_left_spritesheet_path = os.path.join(current_directory, "Assets", "assassin_run_left.png")
-        idle_spritesheet_path = os.path.join(current_directory, "Assets", "assassin_idle.png")
-        junp_spritesheet_path = os.path.join(current_directory, "Assets", "assassin_jump.png")
-
-        run_right_spritesheet = pyglet.image.load(run_spritesheet_path)
-        run_left_spritesheet = pyglet.image.load(run_left_spritesheet_path)
-        idle_spritesheet = pyglet.image.load(idle_spritesheet_path)
-        jump_spritesheet = pyglet.image.load(junp_spritesheet_path)
-
         # Calculate frame size for run animation
         run_rows = 1
         run_columns = 8
@@ -85,7 +85,6 @@ class Player:
         # Update animations or other logic here
         # Update position based on velocity
         self.sprite.x += self.velocity_x * dt
-         # self.velocity_y -= self.gravity * dt
         # Check if the player is jumping
         if self.is_jumping:
             # Update the jump behavior
@@ -124,13 +123,13 @@ class Player:
         elif symbol == pyglet.window.key.SPACE:
             self.keys[symbol] = False
             self.velocity_y = 0
-            if self.keys[pyglet.window.key.D]:
+            if self.keys[pyglet.window.key.D] and self.sprite.y == self.initial_y:
                 self.current_animation = self.run_animation
                 self.sprite.image = self.run_animation
-            elif self.keys[pyglet.window.key.A]:
+            elif self.keys[pyglet.window.key.A] and self.sprite.y == self.initial_y:
                 self.current_animation = self.run_left_animation
                 self.sprite.image = self.run_left_animation
-            else:
+            elif self.sprite.y == self.initial_y:
                 self.current_animation = self.idle_animation
                 self.sprite.image = self.idle_animation
         elif modifiers or key.MOD_SHIFT:
@@ -147,11 +146,20 @@ class Player:
 
     def update_jump(self, dt):
         # Check if the player has ascended above or descended below the initial y position
-        if self.sprite.y < self.initial_y:
+        if self.sprite.y <= self.initial_y:
             # If descending below, reset to initial y position and stop the jump
             self.sprite.y = self.initial_y
             self.velocity_y = 0
             self.is_jumping = False
+            if self.keys[pyglet.window.key.D]:
+                self.current_animation = self.run_animation
+                self.sprite.image = self.run_animation
+            elif self.keys[pyglet.window.key.A]:
+                self.current_animation = self.run_left_animation
+                self.sprite.image = self.run_left_animation
+            else:
+                self.current_animation = self.idle_animation
+                self.sprite.image = self.idle_animation
 
     def draw(self):
         self.sprite.draw()
