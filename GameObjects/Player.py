@@ -2,6 +2,7 @@ import pyglet
 import os
 
 from pyglet.window import key
+from typing import Tuple
 
 current_directory = os.path.dirname(os.path.abspath(__file__))
 # Define the relative path to the sprite sheets
@@ -74,11 +75,19 @@ class Player:
 
         # Create sprite
         self.sprite = pyglet.sprite.Sprite(self.current_animation, x=x, y=y)
+        self.player_width = self.sprite.width // 2
 
-    def update(self, dt):
+    def update(self, border, win_size: Tuple, dt):
         # Update animations or other logic here
         # Update position based on velocity
-        self.sprite.x += self.velocity_x * dt
+        new_x = self.sprite.x + self.velocity_x * dt
+        print(self.sprite.x)
+        if self.sprite.x < border - self.player_width:
+            self.sprite.x = border - self.player_width
+        elif self.sprite.x + self.player_width > win_size[0] - border:
+            self.sprite.x = win_size[0] - border - self.player_width
+        else:
+            self.sprite.x = new_x
         # Check if the player is jumping
         if self.is_jumping:
             # Update the jump behavior

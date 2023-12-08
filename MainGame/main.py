@@ -3,7 +3,7 @@ import pyglet
 from GameObjects import Load
 
 # Constantes que marcarán parámetros del juego
-WIDTH = 800
+WIDTH = 1200
 HEIGHT = 600
 BORDER = 30
 player_posx = WIDTH // 3
@@ -34,7 +34,7 @@ class MajueloSouls(pyglet.window.Window):
 
     def update(self, dt):
         # Update the Knight
-        self.player.update(dt)
+        self.player.update(BORDER, self.win_size, dt)
 
     def run(self):
         # Schedule the update function
