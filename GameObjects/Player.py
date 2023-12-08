@@ -35,20 +35,14 @@ class Player:
         # Calculate frame size for run animation
         run_rows = 1
         run_columns = 8
-        run_frame_width = run_right_spritesheet.width // run_columns
-        run_frame_height = run_right_spritesheet.height // run_rows
 
         # Calculate frame size for idle animation
         idle_rows = 1
         idle_columns = 8
-        idle_frame_width = idle_spritesheet.width // idle_columns
-        idle_frame_height = idle_spritesheet.height // idle_rows
 
         # Calculate frame size for jump animation
         jump_rows = 1
         jump_columns = 3
-        jump_frame_width = jump_spritesheet.width // jump_columns
-        jump_frame_height = jump_spritesheet.height // jump_rows
 
         # Create image grids and textures for run animation
         run_image_grid = pyglet.image.ImageGrid(run_right_spritesheet, run_rows, run_columns)
