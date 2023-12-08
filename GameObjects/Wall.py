@@ -1,5 +1,6 @@
 import pyglet
 
+
 # Class for the game's walls
 class Wall(pyglet.shapes.Rectangle):
 

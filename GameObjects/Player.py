@@ -17,7 +17,7 @@ jump_spritesheet = pyglet.image.load(junp_spritesheet_path)
 
 
 class Player:
-    def __init__(self, x, y, speed=200):
+    def __init__(self, x, y, speed=200, batch=None):
         # Load sprite sheets for run and idle animations
         # Get the current script's directory
         # Set the knight's speed

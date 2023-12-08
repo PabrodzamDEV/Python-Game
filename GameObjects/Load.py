@@ -1,3 +1,4 @@
+from GameObjects.Player import Player
 from GameObjects.Wall import Wall
 from typing import Tuple
 
@@ -10,3 +11,8 @@ def load_walls(win_size: Tuple, border: float, batch=None):
     bottom = Wall(x=0, y=0, width=win_size[0], height=border, batch=batch)
     walls.extend([left, top, right, bottom])
     return walls
+
+
+def load_player(x, y, speed, batch=None):
+    player = Player(x, y, speed, batch)
+    return player
