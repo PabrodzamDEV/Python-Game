@@ -414,12 +414,16 @@ class Player:
             self.sprite.image = self.idle_animation
 
     def stop_running(self, dt):
-        self.is_running = False
-        if not self.is_jumping:
-            if self.keys[key.A]:
-                self.velocity_x = -self.player_initial_speed
-            elif self.keys[key.D]:
-                self.velocity_x = self.player_initial_speed
+        if not self.is_dying:
+            self.is_running = False
+            if not self.is_jumping:
+                if self.keys[key.A]:
+                    self.velocity_x = -self.player_initial_speed
+                elif self.keys[key.D]:
+                    self.velocity_x = self.player_initial_speed
+        else:
+            self.velocity_x = 0
+            self.velocity_y = 0
 
     def draw(self):
         self.sprite.draw()
