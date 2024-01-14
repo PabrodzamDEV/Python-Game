@@ -215,9 +215,7 @@ class MajueloSouls(pyglet.window.Window):
             # Insert a new record, if that is the case
             if self.player_distance > self.highest_score:
                 cursor.execute('INSERT INTO scores (score) VALUES (?)', (int(self.player_distance),))
-            # Retrieve the highest score from the database
-            cursor.execute('SELECT MAX(score) FROM scores')
-            self.highest_score = cursor.fetchone()[0]
+                self.highest_score = self.player_distance
             conn.commit()
             conn.close()
             self.game_over_label.draw()
