@@ -76,7 +76,6 @@ class InfiniteBackground(pyglet.sprite.Sprite):
     def __init__(self, image, x, y, batch=None):
         super(InfiniteBackground, self).__init__(image, x=x, y=y, batch=batch)
         self.width, self.height = image.width, image.height
-        bg_music_player.play()
 
     def update(self, player_velocity_x, dt):
         # Update background position based on player movement
@@ -94,6 +93,7 @@ class InfiniteBackground(pyglet.sprite.Sprite):
 class MajueloSouls(pyglet.window.Window):
     def __init__(self):
         super(MajueloSouls, self).__init__(WIDTH, HEIGHT, "MajueloSouls", resizable=False)
+        bg_music_player.play()
         self.highest_score = 0  # Make sure it is set at least to 0
         # If there is a highest score in the database, use it
         if highest_score is not None:
